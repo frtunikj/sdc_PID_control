@@ -42,7 +42,7 @@ int main() {
 
     double KpS = 0.1;
     double KiS = 0.0001;
-    double KdS = 1.0;
+    double KdS = 1.2;
 
     PID pid_steering;
     pid_steering.Init(KpS, KiS, KdS);
@@ -54,7 +54,7 @@ int main() {
     PID pid_throttle;
     pid_throttle.Init(KpT, KiT, KdT);
     
-    h.onMessage([&pid_steering,&pid_throttle](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
+    h.onMessage([&pid_steering, &pid_throttle](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
         // "42" at the start of the message means there's a websocket message event.
         // The 4 signifies a websocket message
         // The 2 signifies a websocket event
@@ -76,15 +76,12 @@ int main() {
 
                     pid_steering.UpdateError(cte);
                     steer_value = pid_steering.TotalError();
-
-                    // Clamp steering angle
+                    // The steering angle is between -1 and 1
                     if (steer_value < -1.0) {
                         steer_value = -1.0;
                     } else if (steer_value > 1.0) {
                         steer_value = 1.0;
                     }
-                    // DEBUG
-                    std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
                     
                     json msgJson;
                     msgJson["steering_angle"] = steer_value;

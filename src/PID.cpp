@@ -15,10 +15,10 @@ PID::PID() {
 PID::~PID() {
 }
 
-void PID::Init(double Kp, double Ki, double Kd) {
-    Kp = Kp;
-    Ki = Ki;
-    Kd = Kd;
+void PID::Init(double InKp, double InKi, double InKd){
+    Kp = InKp;
+    Ki = InKi;
+    Kd = InKd;
 }
 
 void PID::UpdateError(double cte) {
