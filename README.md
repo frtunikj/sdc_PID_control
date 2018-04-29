@@ -28,7 +28,7 @@ As a start, a P-control gain of Kp = 1.0 was used which leaded the car to rapidl
 
 NOTE: I experienced problems with the simulator when recording videos thus no example videos are provided.
 
-The result of the localization is depicted on the figure below.
+A screen-shot of the work of the PID controler is depicted on the figure below.
 
 ![alt text][image0]
 
