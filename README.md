@@ -9,15 +9,15 @@ This project implements a PID controler in C++. The Udacity code basis for the p
 
 * P (proportional control)
 
-    The Proportional control gain generates a control signal in direct proportion to the cross-track-error (CTE), in such a way that the CTE is reduced. As mentioned above the CTE can be seen as the deviation of the current vehicle's position to the ideal center of the road. As the deviation increases, also the steering angle increases. If this parameter is too large the tendency is to overshoot and miss the desired output. If it's too small, it will take a longer time to get to the desired set point. 
+    The Proportional control gain `-Kp * CTE` generates a control signal in direct proportion to the cross-track-error (CTE), in such a way that the CTE is reduced. As mentioned above the CTE can be seen as the deviation of the current vehicle's position to the ideal center of the road. As the deviation increases, also the steering angle increases. If this parameter is too large the tendency is to overshoot and miss the desired output. If it's too small, it will take a longer time to get to the desired set point. 
 
 * D (derivative control)
 
-    The Derivative control gain considers the rate of change in the error. If the error is rapidly approaching zero, this parameter will attempt to slow things down to avoid overshooting. If this is too large, then there will be over damping which means it will take longer to reach the desired goal. 
+    The Derivative control gain `Kd * (CTE - prev_CTE) / dt` considers the rate of change in the error. If the error is rapidly approaching zero, this parameter will attempt to slow things down to avoid overshooting. If this is too large, then there will be over damping which means it will take longer to reach the desired goal. 
 
 * I (integral control)
 
-    The Integral control gain accumulates the CTE error over time and its influence increases with higher accumulated error (it integrates the area under the error curve). This parameter is usually used for compensation of systematic bias in the system. An example for a systematic bias is e.g. when the front wheels are not oriented exactly straight for a steering angle of 0 degrees. 
+    The Integral control gain `Ki * sum(cte) * dt` accumulates the CTE error over time and its influence increases with higher accumulated error (it integrates the area under the error curve). This parameter is usually used for compensation of systematic bias in the system. An example for a systematic bias is e.g. when the front wheels are not oriented exactly straight for a steering angle of 0 degrees. 
 
 **Hyperparameter selection:** For selection of the hyperparameters one can use the [Twiddle](https://martin-thoma.com/twiddle/) algorithm. In the Udacity lectures a vehicle model was in place so the Twiddle algorithm could be used. However, in the simulator was not possible to see changes in the PID parameters set choice. Thus the final  parameters of the PID controller i.e. Kp, Kd and Ki were chosen manually through a trial and error process and observation of the effects. A good resource discussing various methods to adjust the PID coefficients can be find [here](https://udacity-reviews-uploads.s3.amazonaws.com/_attachments/41330/1493863065/pid_control_document.pdf). This document provides a nice table describing what effects are 
 changed when each constant (P, I, D) is increased:
